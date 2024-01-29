@@ -19,7 +19,7 @@ async function main() {
     await $`git add .`;
   }
   async function com() {
-    return await $`git commit --quiet --date "jan 28 2024 02:10:00 GMT+0100 (West Africa Standard Time)" -m "Periwnkl: kickstart"`;
+    return await $`git commit --quiet --date "jan 29 2024 02:10:00 GMT+0100 (West Africa Standard Time)" -m "Periwnkl: kickstart"`;
   }
 }
 
