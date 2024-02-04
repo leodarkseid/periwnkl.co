@@ -9,6 +9,7 @@ import {
   useColorModeValue,
   Text,
   Box,
+  Link
 } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/next-js";
 import home from "../../../public/home.svg";
@@ -104,7 +105,7 @@ export default function Body() {
         width='70%'
         justifySelf='center'
       >
-        <HomeCard image={Nft} nameOfCard="Marketplace" active={true} />
+        <Link href="http://marketplace.periwnkl.co"><HomeCard image={Nft} nameOfCard="Marketplace" active={true} /></Link>
         <HomeCard image={Stock} nameOfCard="StockOptions" active={true} />
         <HomeCard image={WageSvg} nameOfCard="WagePay" active={true} />
         <HomeCard image={Crm} nameOfCard="CRM" active={false} />

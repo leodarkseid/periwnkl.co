@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import ToggleColorMode from "@/components/ToggleColorMode";
 import {
@@ -5,7 +6,6 @@ import {
   Flex,
   useColorModeValue,
   Text,
-  
   Spacer,
   Link,
 } from "@chakra-ui/react";
@@ -43,7 +43,7 @@ export default function NavBar() {
               color="white"
               display={{ base: "none", md: "block", lg: "block" }}
             >
-              {isStockPage ? 'Stock Manger': 'WagePay'}
+              {isStockPage ? "Stock Manger" : "WagePay"}
             </Text>
             <Spacer />
             <Link _hover={{ textDecoration: "none", color: "lightGray" }}>
@@ -68,25 +68,26 @@ export default function NavBar() {
         </Box>
       </>
     );
-  } else if(isFrontPage) {
-    return (    <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex
-          as="nav"
-          h={16}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          gap="10px"
-        >
-          <Box>
-            <Image alt="Logo " src={logoText} />
-          </Box>
-          <Spacer />
-          <ConnectButton />
-          <ToggleColorMode />
-        </Flex>
-      </Box>
-    </>)
+  } else if (isFrontPage) {
+    return (
+      <>
+        <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+          <Flex
+            as="nav"
+            h={16}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            gap="10px"
+          >
+            <Box>
+              <Image alt="Logo " src={logoText} />
+            </Box>
+            <Spacer />
 
+            <ToggleColorMode />
+          </Flex>
+        </Box>
+      </>
+    );
   }
 }

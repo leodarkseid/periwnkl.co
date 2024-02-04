@@ -78,17 +78,7 @@ export default function Create() {
     signer
   )
 
-  async function d(){
-    const ans = await contract.getDeployedStockOptions();
-    return ans;
-  }
 
-  useEffect(()=>{
-    async function f(){
-if(isConnected){console.log( await d())}
-    }
-    f()
-  }, [isConnected])
   
   
 
