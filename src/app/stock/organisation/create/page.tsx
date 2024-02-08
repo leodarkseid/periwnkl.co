@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import {
   FormControl,
@@ -151,29 +152,29 @@ export default function Create() {
   // });
   // }
 
-  async function getTotalAmount(contractAddress: `0x${string}`) {
-    const contractRead = useContractRead({
-      address: contractAddress,
-      abi: [
-        {
-          inputs: [],
-          name: "getTotalEmployees",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-      ],
-      functionName: "getTotalEmployees",
-      watch: true,
-    });
-    return contractRead;
-  }
+  // async function getTotalAmount(contractAddress: `0x${string}`) {
+  //   const contractRead = useContractRead({
+  //     address: contractAddress,
+  //     abi: [
+  //       {
+  //         inputs: [],
+  //         name: "getTotalEmployees",
+  //         outputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //     ],
+  //     functionName: "getTotalEmployees",
+  //     watch: true,
+  //   });
+  //   return contractRead;
+  // }
 
   const {
     data: txData,

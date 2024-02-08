@@ -109,7 +109,7 @@ export default function Dashboard(props: DashProps) {
     } finally {
       setPieLoading(false);
     }
-  }, [props, isConnected]);
+  }, [props, isConnected, signer]);
 
   useEffect(() => {
     if (isConnected && mounted) {

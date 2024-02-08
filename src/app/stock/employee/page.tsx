@@ -83,7 +83,7 @@ export default function Page() {
     if (isConnected && mounted) {
       fetchData();
     }
-  }, [isConnected, mounted]);
+  }, [isConnected, mounted,address, signer]);
 
   return (
     <Container minHeight="80vh">

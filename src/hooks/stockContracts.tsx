@@ -10,18 +10,18 @@ import { ReturnColor } from "@/utils/contractUtil";
 const ContractFactoryAddress = "0x9d0E31a2f4516a8b2B7CBB92642274E499f5A1f2";
 
 
-async function getListed(signer: ethers.providers.JsonRpcSigner) {
-  const { isConnected } = useAccount();
-  if (isConnected && signer) {
-    const contract = new Contract(
-      ContractFactoryAddress,
-      StockFactory.abi,
-      signer
-    );
-    console.log("get listed got called");
-    return await contract.getCreatorDeployedContracts();
-  }
-}
+// async function getListed(signer: ethers.providers.JsonRpcSigner) {
+//   const { isConnected } = useAccount();
+//   if (isConnected && signer) {
+//     const contract = new Contract(
+//       ContractFactoryAddress,
+//       StockFactory.abi,
+//       signer
+//     );
+//     console.log("get listed got called");
+//     return await contract.getCreatorDeployedContracts();
+//   }
+// }
 
 export function soContract(
   soAddress: string,

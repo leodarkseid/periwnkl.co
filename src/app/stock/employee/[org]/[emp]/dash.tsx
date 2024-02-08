@@ -150,7 +150,7 @@ export default function Dashboard(props: DashProps) {
         setSpLoading(false);
       }
     }
-  }, [empAddr, mounted, orgAddr]);
+  }, [empAddr, mounted, orgAddr, isConnected, signer]);
 
   return (
     <Container

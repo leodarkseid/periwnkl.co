@@ -113,7 +113,7 @@ export default function Dashboard(props: DashProps) {
     if (isConnected && mounted) {
       FetchData();
     }
-  }, [empAddr, mounted, orgAddr]);
+  }, [empAddr, mounted, orgAddr, signer, isConnected]);
 
   async function HandleGrantOptionSubmit(e: SyntheticEvent) {
     e.preventDefault();

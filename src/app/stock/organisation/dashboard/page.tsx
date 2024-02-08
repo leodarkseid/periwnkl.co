@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import { Container, Box, Text, Flex, Spinner } from "@chakra-ui/react";
 import { SyntheticEvent, useEffect, useState } from "react";
