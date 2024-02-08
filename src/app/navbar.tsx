@@ -50,6 +50,7 @@ export default function NavBar() {
               <Text
                 color="white"
                 _hover={{ textDecoration: "none", color: "lightGray" }}
+                display={{ base: "none", lg: "inherit" }}
               >
                 Employee
               </Text>
@@ -58,11 +59,22 @@ export default function NavBar() {
               <Text
                 color="white"
                 _hover={{ textDecoration: "none", color: "lightGray" }}
+                display={{ base: "none", lg: "inherit" }}
               >
                 Organisation
               </Text>
             </Link>
-            <ConnectButton label="connect" />
+            <ConnectButton
+              label="connect"
+              accountStatus={{
+                smallScreen: "avatar",
+                largeScreen: "full",
+              }}
+              showBalance={{
+                smallScreen: false,
+                largeScreen: true,
+              }}
+            />
             <ToggleColorMode />
           </Flex>
         </Box>

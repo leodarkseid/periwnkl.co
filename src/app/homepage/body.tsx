@@ -9,7 +9,8 @@ import {
   useColorModeValue,
   Text,
   Box,
-  Link
+  Link,
+  textDecoration
 } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/next-js";
 import home from "../../../public/home.svg";
@@ -65,7 +66,6 @@ export default function Body() {
               fontSize={{ base: "35px", lg: "100px" }}
               fontWeight="bold"
               color={useColorModeValue("#0d6efd", "white")}
-             
             >
               <h1>Periwnkl</h1>
             </Heading>
@@ -97,22 +97,36 @@ export default function Body() {
       </Box>
 
       <SimpleGrid
-        templateColumns={{base: 'repeat(1, 1fr)',md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)'}}
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(4, 1fr)",
+        }}
         minChildWidth="250px"
         mt={{ base: "5px", md: "5px", lg: "5px" }}
-        mb='10px'
+        mb="10px"
         spacing={5}
-        width='70%'
-        justifySelf='center'
+        width="70%"
+        justifySelf="center"
       >
-        <Link href="http://marketplace.periwnkl.co"><HomeCard image={Nft} nameOfCard="Marketplace" active={true} /></Link>
-        <HomeCard image={Stock} nameOfCard="StockOptions" active={true} />
+        <Link
+          textDecoration="none"
+          _hover={{ textDecoration: "none" }}
+          href="http://marketplace.periwnkl.co"
+        >
+          <HomeCard image={Nft} nameOfCard="Marketplace" active={true} />
+        </Link>
+        <Link
+          textDecoration="none"
+          _hover={{ textDecoration: "none" }}
+          href="./stock"
+        >
+          <HomeCard image={Stock} nameOfCard="StockOptions" active={true} />
+        </Link>
         <HomeCard image={WageSvg} nameOfCard="WagePay" active={true} />
         <HomeCard image={Crm} nameOfCard="CRM" active={false} />
         <HomeCard image={Tax} nameOfCard="Tax Manager" active={false} />
       </SimpleGrid>
-
-     
     </Container>
   );
 }

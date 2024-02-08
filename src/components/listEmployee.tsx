@@ -1,12 +1,13 @@
 import { Box, useColorModeValue, Text } from "@chakra-ui/react";
-import { GoOrganization } from "react-icons/go";
+
+import { CgProfile } from "react-icons/cg";
 
 interface ListCardProps {
-  name: string;
+  id: number;
   address: string;
-  emp: number;
+  onClick: () => void;
 }
-export default function ListBox(props: ListCardProps){
+export default function ListEmployee(props: ListCardProps){
     return (
       <Box
         bgColor="#E6F4F1"
@@ -27,13 +28,15 @@ export default function ListBox(props: ListCardProps){
         transitionProperty="all"
         transitionDuration="500ms"
         _hover={{transform :"scale(1.07)"}}
+        minHeight= "25px"
+        onClick={props.onClick}
       >
+        
+        <Text noOfLines={1}>{props.id}</Text>
         <span>
-          <GoOrganization />
+          <CgProfile />
         </span>
-        <Text noOfLines={1}>{props.name}</Text>
         <Text noOfLines={1}>{props.address}</Text>
-        <Text noOfLines={1}>{props.emp}</Text>
       </Box>
     );
 }

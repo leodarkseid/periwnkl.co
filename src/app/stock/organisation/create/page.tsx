@@ -14,14 +14,14 @@ import {
   AlertTitle,
   AlertDescription,
   Text,
-Flex
+  Flex,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   useContractWrite,
   usePrepareContractWrite,
   useAccount,
   useContractRead,
-  
   useWaitForTransaction,
   useSendTransaction,
 } from "wagmi";
@@ -30,10 +30,11 @@ import StockFactory from "../../constants/StockOptionsFactory.json";
 import { SyntheticEvent, useEffect, useState } from "react";
 import ListBox from "@/components/listComponent";
 
-import { ethers } from "ethers";
-import { Contract } from "ethers";
-import { useEthersProvider } from "@/hooks/adapter1";
+import { ethers, Contract, BigNumber } from "ethers";
+
 import { useEthersSigner } from "@/hooks/adapter2";
+import NoData from "../../../../../public/noData.jpg";
+import { Image } from "@chakra-ui/next-js";
 
 const ContractFactoryAddress = "0x9d0E31a2f4516a8b2B7CBB92642274E499f5A1f2";
 
@@ -44,10 +45,15 @@ interface EmployeeData {
 }
 
 export default function Create() {
-  const [mounted , setMounted] = useState(false);
-  useEffect(() => setMounted(true), [])
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setMounted(true);
+    }, 2000); // 2000 milliseconds = 2 seconds
+  }, []);
   const [name, setName] = useState("");
   const [stockOptions, setStockOptions] = useState(0);
+  const [loadingEmpData, setLoadingEmpData] = useState(false);
   const { isConnected } = useAccount();
   const [employeeData, setEmployeeData] = useState<EmployeeData[]>([]);
 
@@ -66,88 +72,108 @@ export default function Create() {
     isError: isTransferError,
     error: transferError,
     data: transferData,
-    
   } = useContractWrite(config);
 
   //  const provider = useEthersProvider()
-   const signer = useEthersSigner()
-  //  console.log(signer)
-  const contract = new Contract(
-    ContractFactoryAddress, 
-    StockFactory.abi,
-    signer
-  )
 
+  let signerX: ethers.providers.JsonRpcSigner | undefined;
+  isConnected ? (signerX = useEthersSigner()) : null;
+  async function getListed() {
+    if (isConnected && signerX) {
+      const contract = new Contract(
+        ContractFactoryAddress,
+        StockFactory.abi,
+        signerX
+      );
+      console.log("get listed got called");
+      return await contract.getCreatorDeployedContracts();
+    }
+  }
 
-  
-  
+  async function getTotalFunction(contractAddress: string) {
+    if (isConnected && signerX) {
+      const contract = new Contract(
+        contractAddress,
+        [
+          {
+            inputs: [],
+            name: "getTotalEmployees",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        ],
+        signerX
+      );
+      const getNumber: BigNumber = await contract.getTotalEmployees();
+      return getNumber.toNumber();
+    }
+  }
 
-  
-//   function d(){
-//   const {refetch:Re} = useContractRead({
-//     address: ContractFactoryAddress,
-//     abi: [
-//       {
-       
-//         name: "getCreatorDeployedContracts",
-//         outputs: [
-//           {
-//             components: [
-//               {
-//                 internalType: "string",
-//                 name: "name",
-//                 type: "string",
-//               },
-//               {
-//                 internalType: "address",
-//                 name: "newContractAddress",
-//                 type: "address",
-//               },
-//             ],
-            
-//             name: "",
-//             type: "tuple[]",
-//           },
-//         ],
-//         stateMutability: "view",
-//         type: "function",
-//       },
-//     ],
-//     functionName: 'getCreatorDeployedContracts',
-//     watch:true
-    
-//   });
-//   return Re
-// }
-
-
-
- 
-
-  // async function getTotalAmount(contractAddress: `0x${string}`) {
-  //   const contractRead = useContractRead({
-  //     address: contractAddress,
-  //     abi: [
-  //       {
-  //         inputs: [],
-  //         name: "getTotalEmployees",
-  //         outputs: [
-  //           {
-  //             internalType: "uint256",
-  //             name: "",
-  //             type: "uint256",
-  //           },
-  //         ],
-  //         stateMutability: "view",
-  //         type: "function",
-  //       },
-  //     ],
-  //     functionName: "getTotalEmployees",
-  //     watch: true
-  //   });
-  //   return contractRead     ;
+  // if(isConnected) {
+  //     gcpD = useContractRead({
+  //   address: ContractFactoryAddress,
+  //   abi: [
+  //     {
+  //       inputs: [],
+  //       name: "getCreatorDeployedContracts",
+  //       outputs: [
+  //         {
+  //           components: [
+  //             {
+  //               internalType: "string",
+  //               name: "name",
+  //               type: "string",
+  //             },
+  //             {
+  //               internalType: "address",
+  //               name: "newContractAddress",
+  //               type: "address",
+  //             },
+  //           ],
+  //           internalType: "struct StockOptionsFactory.AddressName[]",
+  //           name: "",
+  //           type: "tuple[]",
+  //         },
+  //       ],
+  //       stateMutability: "view",
+  //       type: "function",
+  //     },
+  //   ],
+  //   functionName: "getCreatorDeployedContracts",
+  //   watch: true,
+  // });
   // }
- 
+
+  async function getTotalAmount(contractAddress: `0x${string}`) {
+    const contractRead = useContractRead({
+      address: contractAddress,
+      abi: [
+        {
+          inputs: [],
+          name: "getTotalEmployees",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      functionName: "getTotalEmployees",
+      watch: true,
+    });
+    return contractRead;
+  }
 
   const {
     data: txData,
@@ -173,50 +199,53 @@ export default function Create() {
   //     e.stopPropagation();
   //   }
   // }
-  
-useEffect( ()=>{
-  
-  const fetchData = async () => {
-    //cache
-    const cache = await caches.open('my-cache')
-    const cachedResponse = await cache.match("employee-data");
-    if (cachedResponse) {
-      // If the data is cached, use it
-      const data = await cachedResponse.json();
-      setEmployeeData(data);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoadingEmpData(true);
+      //cache
+      const cache = await caches.open("my-cache");
+      const cachedResponse = await cache.match("employee-data");
+      if (cachedResponse) {
+        // If the data is cached, use it
+        const data = await cachedResponse.json();
+        setEmployeeData(data);
+      }
+
+      const newData: any = await getListed();
+      console.log(newData);
+      if (newData) {
+        const data = await Promise.all(
+          newData.map(
+            async (addressObj: { newContractAddress: string; name: any }) => {
+              let tempAddress: `0x${string}` =
+                addressObj.newContractAddress as `0x${string}`;
+              const empCount = await getTotalFunction(tempAddress);
+              console.log("emp", empCount);
+              return {
+                name: addressObj.name,
+                address: addressObj.newContractAddress,
+                emp: empCount,
+              };
+            }
+          )
+        );
+        setEmployeeData(data);
+
+        //set in cache
+        await cache.put(
+          "emplyee-data",
+          new Response(JSON.stringify(data), {
+            headers: { "Content-Type": "application/json" },
+          })
+        );
+      }
+      setLoadingEmpData(false);
+    };
+    if (isConnected) {
+      fetchData();
     }
-
-  
-
-    // const newData:any = Data
-    // console.log(Data)
-  //   if(Data){
-  //     const data = await Promise.all(
-  //     newData.map((addressObj: { newContractAddress: string; name: any; })=>{
-  //       let tempAddress: `0x${string}` =
-  //         addressObj.newContractAddress as `0x${string}`;
-  //       const empCount = getTotalAmount(tempAddress);
-  //       console.log("emp",empCount)
-  //       return {
-  //         name: addressObj.name,
-  //         address: addressObj.newContractAddress,
-  //         emp: empCount,
-  //       };
-  //     }));
-  //     setEmployeeData(data);
-
-  //     //set in cache
-  //     await cache.put(
-  //       'emplyee-data',
-  //       new Response(JSON.stringify(data), {
-  //         headers: {'Content-Type':'application/json'}
-  //       })
-  //     )
-  //   }
-  }
-  fetchData();
-  
-}, [mounted,transferError, transferData])
+  }, [mounted, transferError, transferData, isConnected]);
 
   return (
     <Container>
@@ -243,7 +272,7 @@ useEffect( ()=>{
           <FormControl mt={7}>
             <FormLabel> Total amount of stock Options </FormLabel>
             <Input
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setStockOptions(Number(e.target.value))}
               isDisabled={!mounted || isTransferLoading || !isConnected}
               type="number"
               placeholder="0"
@@ -284,40 +313,60 @@ useEffect( ()=>{
         )}
       </Box>
 
-      <Flex>
-        { (
+      <Flex
+        width="100%"
+        as="div"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        {loadingEmpData && (
           <Spinner
             thickness="4px"
             speed="0.65s"
             emptyColor="gray.200"
             color="blue.500"
             size="xl"
+            mb={4}
           />
         )}
-        { (
-          <Box
-            width="100%"
-            py={2}
-            rounded="5px"
-            justifyContent="center"
-            bgColor="#0d6efd"
-          >
-            <Text mb={5} fontWeight="bold" textAlign="center">
+        {
+          <Box width="100%" py={2} justifyContent="center" alignItems="center">
+            <Text
+              bgColor="#0d6efd"
+              rounded="5px"
+              mb={5}
+              fontWeight="bold"
+              textAlign="center"
+              color="white"
+            >
               List of Organisations
             </Text>
 
-            {employeeData.map((data, index) => (
-              <div key={index}>
-                <ListBox
-                  key={index}
-                  name={data.name}
-                  address={data.address}
-                  emp={data.emp}
+            {employeeData.length >= 1 ? (
+              employeeData.map((data, index) => (
+                <div key={index}>
+                  <ListBox
+                    key={index}
+                    name={data.name}
+                    address={data.address}
+                    emp={data.emp}
+                  />
+                </div>
+              ))
+            ) : (
+              <Flex justifyContent="center">
+                {" "}
+                <Image
+                  src={NoData}
+                  alt="No Data"
+                  boxSize={{ base: "200px", md: "350px", lg: "350px" }}
+                  style={{ fill: "context-fill" }}
                 />
-              </div>
-            ))}
+              </Flex>
+            )}
           </Box>
-        )}
+        }
       </Flex>
     </Container>
   );
