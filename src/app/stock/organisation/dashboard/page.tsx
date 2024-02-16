@@ -9,6 +9,7 @@ import { useAccount, useContractRead } from "wagmi";
 import ListBox from "@/components/listComponent";
 import { BigNumber, Contract, ethers } from "ethers";
 import { useEthersSigner } from "@/hooks/adapter2";
+import { useRouter } from "next/navigation";
 
 const ContractFactoryAddress = "0x9d0E31a2f4516a8b2B7CBB92642274E499f5A1f2";
 
@@ -19,6 +20,7 @@ interface EmployeeData {
 }
 
 export default function Page() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setTimeout(() => {
@@ -151,7 +153,12 @@ export default function Page() {
 
         {employeeData.length >= 1 ? (
           employeeData.map((data, index) => (
-            <div key={index}>
+            <div
+              onClick={() =>
+                router.push(`/stock/organisation/dashboard/${data.address}`)
+              }
+              key={index}
+            >
               <ListBox
                 key={index}
                 name={data.name}

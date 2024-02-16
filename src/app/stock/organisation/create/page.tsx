@@ -36,6 +36,7 @@ import { ethers, Contract, BigNumber } from "ethers";
 import { useEthersSigner } from "@/hooks/adapter2";
 import NoData from "../../../../../public/noData.jpg";
 import { Image } from "@chakra-ui/next-js";
+import { useRouter } from "next/navigation";
 
 const ContractFactoryAddress = "0x9d0E31a2f4516a8b2B7CBB92642274E499f5A1f2";
 
@@ -46,6 +47,7 @@ interface EmployeeData {
 }
 
 export default function Create() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setTimeout(() => {
@@ -346,7 +348,7 @@ export default function Create() {
 
             {employeeData.length >= 1 ? (
               employeeData.map((data, index) => (
-                <div key={index}>
+                <div onClick={() => router.push("/stock/dashboard")} key={index}>
                   <ListBox
                     key={index}
                     name={data.name}

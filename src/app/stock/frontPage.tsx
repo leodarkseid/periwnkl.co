@@ -14,9 +14,8 @@ import Security from "../../../public/securityEllipse.svg";
 import SupportMo from "../../../public/supportMO.svg";
 import HandShake from "../../../public/handShake.svg";
 import Team from "../../../public/team.svg";
-import { Image } from "@chakra-ui/next-js";
+import { Image, Link } from "@chakra-ui/next-js";
 import { Lilita_One } from "next/font/google";
-
 
 export default function FrontPage() {
   return (
@@ -77,14 +76,20 @@ export default function FrontPage() {
               >
                 For Organisations
               </Text>
-              <Button
-                alignSelf={{ base: "center", sm: "center", lg: "normal" }}
-                textAlign={{ base: "center", sm: "center", lg: "left" }}
-                colorScheme="blue"
-                width={{ base: "50%", md: "25%", lg: "25%" }}
+              <Link
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+                href="/stock/organisation/create"
               >
-                Organisations
-              </Button>
+                <Button
+                  alignSelf={{ base: "center", sm: "center", lg: "normal" }}
+                  textAlign={{ base: "center", sm: "center", lg: "left" }}
+                  colorScheme="blue"
+                  width={{ base: "50%", md: "25%", lg: "25%" }}
+                >
+                  Organisations
+                </Button>
+              </Link>
               <Text
                 alignSelf={{ base: "center", sm: "center", lg: "normal" }}
                 textAlign={{ base: "center", sm: "center", lg: "left" }}
@@ -92,14 +97,20 @@ export default function FrontPage() {
               >
                 For Employees
               </Text>
-              <Button
-                alignSelf={{ base: "center", sm: "center", lg: "normal" }}
-                textAlign={{ base: "center", sm: "center", lg: "left" }}
-                colorScheme="blue"
-                width={{ base: "50%", md: "25%", lg: "25%" }}
+              <Link
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+                href="/stock/employee"
               >
-                Employee
-              </Button>
+                <Button
+                  alignSelf={{ base: "center", sm: "center", lg: "normal" }}
+                  textAlign={{ base: "center", sm: "center", lg: "left" }}
+                  colorScheme="blue"
+                  width={{ base: "50%", md: "25%", lg: "25%" }}
+                >
+                  Employee
+                </Button>
+              </Link>
             </Flex>
           </Flex>
         </GridItem>
