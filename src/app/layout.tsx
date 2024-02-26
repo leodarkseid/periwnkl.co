@@ -29,7 +29,7 @@ export default function RootLayout({
           <Navbar />
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           {children}
-          <PreFooter />
+          {/* <PreFooter /> */}
           <Footer />
         </Providers>
       </body>
